@@ -17,6 +17,9 @@ N. Namura and H. Nakao,
 If you use this code, please cite this paper.
 </p>
 
+<div align="center">
+<img src="figs/image.jpg" width="60%">
+</div>
 
 ## <b> \<Usage\> </b>
 For simulating gait transitions, please run the codes by the following procedure:
