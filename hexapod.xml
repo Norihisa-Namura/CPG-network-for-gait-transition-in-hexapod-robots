@@ -1,0 +1,152 @@
+<!-- XML file describing the structure of the hexapod robot, required for "mujoco_hexapod.py" -->
+
+<mujoco model="hexapod">
+    <asset>
+        <texture name="grid" type="2d" builtin="checker" rgb1=".5 .6 .7" rgb2=".4 .5 .6" width="1000" height="1000"/>
+        <material name="grid" texture="grid" texrepeat="1 1" texuniform="true" reflectance="0"/>
+        <!-- If texuniform is true, texrepeat determines how many textures in 1 (m) -->
+
+        <texture name="skybox" type="skybox" builtin="gradient" rgb1=".4 .6 .8" rgb2="0 0 0" width="100" height="100"/>
+        <mesh name="pyramid" vertex="-0.2 0.0 -0.02  -0.2 0.0 0.02  0.2 0.0 -0.02  0.2 0.0 0.02  0 0.2 0"/>
+    </asset>
+
+    <worldbody>
+        <!-- xyz coordinate (right hand) -->
+        <geom name="floor" type="plane" size="5 10 .1" material="grid" pos="0 0 0" solref="0.0002 1"/>
+        
+        <body name="hexapod" pos="0 0 0">
+            <!-- Light and camera -->
+            <light cutoff="100" diffuse="1 1 1" dir="0 0 -1" directional="true" exponent="1" pos="0 0 3" specular="0.1 0.1 0.1"/>
+            <light cutoff="100" diffuse="1 1 1" dir="-1 2 0" directional="true" exponent="1" pos="1 -2 3" specular="0.1 0.1 0.1"/>
+            <camera name="track" mode="track" target="hexapod" pos="1 -1 1" xyaxes="1 1 0 -1 1 1.7"/>
+
+            <!-- Thorax -->
+            <geom name="thorax" pos="0 0 0" size="0.2 0.4 0.02" type="box" rgba="1 1 1 1" mass="10"/>
+            <joint armature="0" damping="0" limited="false" margin="0.01" name="root" pos="0 0 0" type="free"/>
+
+            <!-- RF -->
+            <body name="RF" pos="0.29 0.38 0.0" euler="0 0 0">
+                <geom name="RF_coxa" pos="0.0 0.0 0.0" size="0.05 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.2"/>
+                <geom name="RF_bolt1" fromto="-0.07 0 -0.02 -0.07 0 0.02" size="0.02 0.02" type="cylinder" mass="0"/>
+                <joint name="RF_joint1" axis="0 0 1" pos="-0.07 0 0.0" range="-180 180" type="hinge"/>
+                <body pos="0.19 0.0 0.0" euler="0 0 0">
+                    <geom name="RF_femur" pos="0.0 0.0 0.0" size="0.1 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.4"/>
+                    <geom name="RF_bolt2" fromto="-0.12 -0.02 0.0 -0.12 0.02 0.0" size="0.02 0.02" type="cylinder" mass="0"/>
+                    <joint name="RF_joint2" axis="0 -1 0" pos="-0.12 0.0 0.0" range="-180 180" type="hinge"/>
+                    <body pos="0.34 0.0 0.0" euler="0 0 0">
+                        <geom name="RF_tibia" pos="0.0 0.0 0.0" size="0.2 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.8"/>
+                        <geom name="RF_bolt3" fromto="-0.22 -0.02 0.0 -0.22 0.02 0.0" size="0.02 0.02" type="cylinder" mass="0"/>
+                        <joint name="RF_joint3" axis="0 -1 0" pos="-0.22 0.0 0.0" range="-180 180" type="hinge"/>
+                    </body> 
+                </body> 
+            </body> 
+
+            <!-- RM -->
+            <body name="RM" pos="0.29 0 0.0" euler="0 0 0">
+                <geom name="RM_coxa" pos="0.0 0.0 0.0" size="0.05 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.2"/>
+                <geom name="RM_bolt1" fromto="-0.07 0 -0.02 -0.07 0 0.02" size="0.02 0.02" type="cylinder" mass="0"/>
+                <joint name="RM_joint1" axis="0 0 1" pos="-0.07 0 0.0" range="-180 180" type="hinge"/>
+                <body pos="0.19 0.0 0.0" euler="0 0 0">
+                    <geom name="RM_femur" pos="0.0 0.0 0.0" size="0.1 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.4"/>
+                    <geom name="RM_bolt2" fromto="-0.12 -0.02 0.0 -0.12 0.02 0.0" size="0.02 0.02" type="cylinder" mass="0"/>
+                    <joint name="RM_joint2" axis="0 -1 0" pos="-0.12 0.0 0.0" range="-180 180" type="hinge"/>
+                    <body pos="0.34 0.0 0.0" euler="0 0 0">
+                        <geom name="RM_tibia" pos="0.0 0.0 0.0" size="0.2 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.8"/>
+                        <geom name="RM_bolt3" fromto="-0.22 -0.02 0.0 -0.22 0.02 0.0" size="0.02 0.02" type="cylinder" mass="0"/>
+                        <joint name="RM_joint3" axis="0 -1 0" pos="-0.22 0.0 0.0" range="-180 180" type="hinge"/>
+                    </body> 
+                </body> 
+            </body> 
+
+            <!-- RH -->
+            <body name="RH" pos="0.29 -0.38 0.0" euler="0 0 0">
+                <geom name="RH_coxa" pos="0.0 0.0 0.0" size="0.05 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.2"/>
+                <geom name="RH_bolt1" fromto="-0.07 0 -0.02 -0.07 0 0.02" size="0.02 0.02" type="cylinder" mass="0"/>
+                <joint name="RH_joint1" axis="0 0 1" pos="-0.07 0 0.0" range="-180 180" type="hinge"/>
+                <body pos="0.19 0.0 0.0" euler="0 0 0">
+                    <geom name="RH_femur" pos="0.0 0.0 0.0" size="0.1 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.4"/>
+                    <geom name="RH_bolt2" fromto="-0.12 -0.02 0.0 -0.12 0.02 0.0" size="0.02 0.02" type="cylinder" mass="0"/>
+                    <joint name="RH_joint2" axis="0 -1 0" pos="-0.12 0.0 0.0" range="-180 180" type="hinge"/>
+                    <body pos="0.34 0.0 0.0" euler="0 0 0">
+                        <geom name="RH_tibia" pos="0.0 0.0 0.0" size="0.2 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.8"/>
+                        <geom name="RH_bolt3" fromto="-0.22 -0.02 0.0 -0.22 0.02 0.0" size="0.02 0.02" type="cylinder" mass="0"/>
+                        <joint name="RH_joint3" axis="0 -1 0" pos="-0.22 0.0 0.0" range="-180 180" type="hinge"/>
+                    </body> 
+                </body> 
+            </body> 
+
+            <!-- LF -->
+            <body name="LF" pos="-0.29 0.38 0.0" euler="0 0 0">
+                <geom name="LF_coxa" pos="0.0 0.0 0.0" size="0.05 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.2"/>
+                <geom name="LF_bolt1" fromto="0.07 0 -0.02 0.07 0 0.02" size="0.02 0.02" type="cylinder" mass="0"/>
+                <joint name="LF_joint1" axis="0 0 1" pos="0.07 0 0.0" range="-180 180" type="hinge"/>
+                <body pos="-0.19 0.0 0.0" euler="0 0 0">
+                    <geom name="LF_femur" pos="0.0 0.0 0.0" size="0.1 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.4"/>
+                    <geom name="LF_bolt2" fromto="0.12 -0.02 0.0 0.12 0.02 0.0" size="0.02 0.02" type="cylinder" mass="0"/>
+                    <joint name="LF_joint2" axis="0 -1 0" pos="0.12 0.0 0.0" range="-180 180" type="hinge"/>
+                    <body pos="-0.34 0.0 0.0" euler="0 0 0">
+                        <geom name="LF_tibia" pos="0.0 0.0 0.0" size="0.2 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.8"/>
+                        <geom name="LF_bolt3" fromto="0.22 -0.02 0.0 0.22 0.02 0.0" size="0.02 0.02" type="cylinder" mass="0"/>
+                        <joint name="LF_joint3" axis="0 -1 0" pos="0.22 0.0 0.0" range="-180 180" type="hinge"/>
+                    </body> 
+                </body> 
+            </body> 
+
+            <!-- LM -->
+            <body name="LM" pos="-0.29 0.0 0.0" euler="0 0 0">
+                <geom name="LM_coxa" pos="0.0 0.0 0.0" size="0.05 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.2"/>
+                <geom name="LM_bolt1" fromto="0.07 0 -0.02 0.07 0 0.02" size="0.02 0.02" type="cylinder" mass="0"/>
+                <joint name="LM_joint1" axis="0 0 1" pos="0.07 0 0.0" range="-180 180" type="hinge"/>
+                <body pos="-0.19 0.0 0.0" euler="0 0 0">
+                    <geom name="LM_femur" pos="0.0 0.0 0.0" size="0.1 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.4"/>
+                    <geom name="LM_bolt2" fromto="0.12 -0.02 0.0 0.12 0.02 0.0" size="0.02 0.02" type="cylinder" mass="0"/>
+                    <joint name="LM_joint2" axis="0 -1 0" pos="0.12 0.0 0.0" range="-180 180" type="hinge"/>
+                    <body pos="-0.34 0.0 0.0" euler="0 0 0">
+                        <geom name="LM_tibia" pos="0.0 0.0 0.0" size="0.2 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.8"/>
+                        <geom name="LM_bolt3" fromto="0.22 -0.02 0.0 0.22 0.02 0.0" size="0.02 0.02" type="cylinder" mass="0"/>
+                        <joint name="LM_joint3" axis="0 -1 0" pos="0.22 0.0 0.0" range="-180 180" type="hinge"/>
+                    </body> 
+                </body> 
+            </body> 
+
+            <!-- LH -->
+            <body name="LH" pos="-0.29 -0.38 0.0" euler="0 0 0">
+                <geom name="LH_coxa" pos="0.0 0.0 0.0" size="0.05 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.2"/>
+                <geom name="LH_bolt1" fromto="0.07 0 -0.02 0.07 0 0.02" size="0.02 0.02" type="cylinder" mass="0"/>
+                <joint name="LH_joint1" axis="0 0 1" pos="0.07 0 0.0" range="-180 180" type="hinge"/>
+                <body pos="-0.19 0.0 0.0" euler="0 0 0">
+                    <geom name="LH_femur" pos="0.0 0.0 0.0" size="0.1 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.4"/>
+                    <geom name="LH_bolt2" fromto="0.12 -0.02 0.0 0.12 0.02 0.0" size="0.02 0.02" type="cylinder" mass="0"/>
+                    <joint name="LH_joint2" axis="0 -1 0" pos="0.12 0.0 0.0" range="-180 180" type="hinge"/>
+                    <body pos="-0.34 0.0 0.0" euler="0 0 0">
+                        <geom name="LH_tibia" pos="0.0 0.0 0.0" size="0.2 0.02 0.02" type="box" rgba="1 0.0 0.0 1" mass="0.8"/>
+                        <geom name="LH_bolt3" fromto="0.22 -0.02 0.0 0.22 0.02 0.0" size="0.02 0.02" type="cylinder" mass="0"/>
+                        <joint name="LH_joint3" axis="0 -1 0" pos="0.22 0.0 0.0" range="-180 180" type="hinge"/>
+                    </body> 
+                </body> 
+            </body> 
+        </body> 
+    </worldbody>
+
+    <!-- PD gains -->
+    <actuator>
+        <position joint="RF_joint1" kp="60" kv="5"/>
+        <position joint="RF_joint2" kp="120" kv="10"/>
+        <position joint="RF_joint3" kp="40" kv="3"/>
+        <position joint="RM_joint1" kp="60" kv="5"/>
+        <position joint="RM_joint2" kp="120" kv="10"/>
+        <position joint="RM_joint3" kp="40" kv="3"/>
+        <position joint="RH_joint1" kp="60" kv="5"/>
+        <position joint="RH_joint2" kp="120" kv="10"/>
+        <position joint="RH_joint3" kp="40" kv="3"/>
+        <position joint="LF_joint1" kp="60" kv="5"/>
+        <position joint="LF_joint2" kp="120" kv="10"/>
+        <position joint="LF_joint3" kp="40" kv="3"/>
+        <position joint="LM_joint1" kp="60" kv="5"/>
+        <position joint="LM_joint2" kp="120" kv="10"/>
+        <position joint="LM_joint3" kp="40" kv="3"/>
+        <position joint="LH_joint1" kp="60" kv="5"/>
+        <position joint="LH_joint2" kp="120" kv="10"/>
+        <position joint="LH_joint3" kp="40" kv="3"/>
+    </actuator>
+</mujoco>

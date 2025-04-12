@@ -1,0 +1,6 @@
+*.asv
+venv/*
+__pycache__
+data/*
+MUJOCO_LOG.TXT
+.python-version
